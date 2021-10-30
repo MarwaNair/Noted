@@ -10,3 +10,8 @@ data class ListWithListItems (
             entityColumn = "listId")
     val listItems : kotlin.collections.List<ListItem>
         )
+
+fun getSubItems(item: ListWithListItems):String {
+    val inListForm = item.listItems.mapIndexed {idx, value -> (idx+1).toString().plus(". ").plus(value.value)}
+    return inListForm.joinToString("\n")
+}

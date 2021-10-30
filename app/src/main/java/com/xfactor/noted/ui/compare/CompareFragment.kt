@@ -3,22 +3,17 @@ package com.xfactor.noted.ui.compare
 import android.app.AlertDialog
 import android.graphics.Paint
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import com.xfactor.noted.ListsToCompare
 import com.xfactor.noted.R
-import com.xfactor.noted.getSubItems
-import com.xfactor.noted.ui.add.NewlistViewModel
+import com.xfactor.noted.database.ListsToCompare
+import com.xfactor.noted.database.getSubItems
 
 class CompareFragment : Fragment() {
 

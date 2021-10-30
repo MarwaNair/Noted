@@ -11,6 +11,9 @@ interface ListItemDao {
     @Query("SELECT * FROM listItem")
     fun getAll () : List<com.xfactor.noted.database.ListItem>
 
+    @Transaction
+    @Query("SELECT * FROM listItem WHERE value LIKE :query")
+    fun searchListItems(query: String): List<ListItem>
 
     @Insert
     fun insertAll( vararg listItems:  com.xfactor.noted.database.ListItem)
@@ -20,4 +23,7 @@ interface ListItemDao {
 
     @Update
     fun update(listitem: ListItem)
+
+
+
 }

@@ -1,9 +1,11 @@
 package com.xfactor.noted.database
 
-interface IRepository {
+import kotlin.collections.List
 
-    fun getAll () : List
-    fun insert (value : Any)
+interface IRepository<T> {
+
+    fun getAll () : kotlin.collections.List<T>
+    fun insert (value : T)
     fun remove(index : Int)
-    fun query(query : String) : List
+    fun query(query : String) : List<T>
 }

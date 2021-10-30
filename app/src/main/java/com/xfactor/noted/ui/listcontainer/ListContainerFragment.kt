@@ -9,15 +9,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.ListAdapter
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xfactor.noted.*
 import com.xfactor.noted.database.ListWithListItems
-import kotlinx.android.synthetic.main.fragment_listcontainer.*
+import com.xfactor.noted.database.ListsToCompare
+import com.xfactor.noted.database.getSubItems
+
 import kotlinx.android.synthetic.main.fragment_listcontainer.view.*
 import kotlinx.android.synthetic.main.fragment_listitem.view.*
 
@@ -34,7 +37,8 @@ fun updateStatus() {
 
 class ListContainerFragment : Fragment() {
 
-    private var adapter = ListsAdapter(getLists());
+    private lateinit var adapter : ListsAdapter
+    private lateinit var listContainerViewModel : ListContainerViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +46,9 @@ class ListContainerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_listcontainer, container, false)
+        listContainerViewModel =
+            ViewModelProviders.of(this).get(ListContainerViewModel::class.java)
+        adapter = ListsAdapter(listContainerViewModel.dataRepo.getAll())
         root.all_lists.layoutManager = GridLayoutManager(context, 2)
         root.all_lists.adapter = adapter
         root.findViewById<AppCompatEditText>(R.id.Search).addTextChangedListener(
@@ -57,7 +64,7 @@ class ListContainerFragment : Fragment() {
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                         val search = s.toString()
-                        val results = searchLists(search)
+                        val results = listContainerViewModel.dataRepo.query(search)
                         Log.e("results",  results.toString())
                         root.all_lists.adapter = ListsAdapter(results)
 
